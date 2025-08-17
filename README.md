@@ -71,7 +71,6 @@ Weather-App/
 │   ├─ views.py           # Views (WeatherAPIView)
 │   └─ urls.py            # URL routes
 ├─ manage.py
-└─ requirements.txt
 ```
 
 ---
@@ -121,3 +120,4 @@ https://api.openweathermap.org/data/2.5/weather?appid={API_KEY}&q={city_name}
 
 ## License
   - This project is open-source and free to use.
+
