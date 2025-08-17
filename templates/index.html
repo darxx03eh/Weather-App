@@ -1,0 +1,70 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App - Enter Your City</title>
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+</head>
+<body>
+    <div class="container">
+        <div class="weather-icon"><img src="https://openweathermap.org/img/w/02{% if now|date:'H'|add:0 >= 6 and now|date:'H'|add:0 < 18 %}d{% else %}n{% endif %}.png" alt="image"/></div>
+
+        <h1>Weather App</h1>
+        <p class="subtitle">Enter your city name to get current weather information</p>
+
+        <form id="weatherForm" method="POST">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="cityInput">City Name</label>
+                <input
+                    type="text"
+                    id="cityInput"
+                    name="city"
+                    placeholder="e.g., Palestine, London, New York, Tokyo"
+                    required
+                    autocomplete="off"
+                >
+            </div>
+
+            <button type="submit" class="btn">
+                Get Weather
+            </button>
+        </form>
+
+        <div class="examples">
+            <h3>Popular Cities</h3>
+            <div class="example-cities">
+				<span class="example-city" onclick="fillCity('Palestine')">Palestine</span>
+                <span class="example-city" onclick="fillCity('London')">London</span>
+                <span class="example-city" onclick="fillCity('New York')">New York</span>
+                <span class="example-city" onclick="fillCity('Tokyo')">Tokyo</span>
+                <span class="example-city" onclick="fillCity('Paris')">Paris</span>
+                <span class="example-city" onclick="fillCity('Dubai')">Dubai</span>
+                <span class="example-city" onclick="fillCity('Jordan')">Jordan</span>
+            </div>
+        </div>
+        {% if error %}
+            <div class="error-message">{{ error }}</div>
+        {% endif %}
+    </div>
+
+    <script>
+        const form = document.getElementById('weatherForm');
+        const cityInput = document.getElementById('cityInput');
+
+        function fillCity(cityName) {
+            cityInput.value = cityName;
+            cityInput.focus();
+        }
+
+        // Add enter key support for example cities
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' && document.activeElement.classList.contains('example-city')) {
+                document.activeElement.click();
+            }
+        });
+    </script>
+</body>
+</html>
